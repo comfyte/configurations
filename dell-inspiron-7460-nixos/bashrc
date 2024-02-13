@@ -1,0 +1,2 @@
+alias edit-nixos-configuration="sudo nano /etc/nixos/configuration.nix && sudo nixos-rebuild switch"
+# TODO: Add automatic pushing to GitHub on each configuration edit.

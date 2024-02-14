@@ -1,2 +1,30 @@
-alias edit-nixos-configuration="sudo nano /etc/nixos/configuration.nix && sudo nixos-rebuild switch"
-# TODO: Add automatic pushing to GitHub on each configuration edit.
+cfy-edit-nixos-configuration() {
+    local MAIN_CONFIG_FILE_PATH='/etc/nixos/configuration.nix'
+    local GIT_ROOT_DIR="~/.os-config-sync"
+    local DEVICE_NAME='dell-inspiron-7460-nixos'
+    local TRACKED_CONFIG_FILE_NAME='nixos-main-configuration.nix'
+    local TRACKED_CONFIG_FILE_PATH_RELATIVE="$DEVICE_NAME/$TRACKED_CONFIG_FILE_NAME"
+
+    sudo nano $MAIN_CONFIG_FILE_PATH && \
+    sudo nixos-rebuild switch && \
+    git -C $GIT_ROOT_DIR pull && \
+    cp -v $MAIN_CONFIG_FILE_PATH $GIT_ROOT_DIR/$TRACKED_CONFIG_FILE_PATH_RELATIVE && \
+    git -C $GIT_ROOT_DIR add $TRACKED_CONFIG_FILE_PATH_RELATIVE && \
+    git -C $GIT_ROOT_DIR commit -m "update: ${DEVICE_NAME}: ${TRACKED_CONFIG_FILE_NAME} ($(date))" && \
+    git -C $GIT_ROOT_DIR push && \
+    echo 'The NixOS configuration file has been updated, applied, and synced with the GitHub repository.'
+}
+
+cfy-edit-bashrc() {
+    local GIT_ROOT_DIR="~/.os-config-sync"
+    local DEVICE_NAME='dell-inspiron-7460-nixos'
+    local TRACKED_FILE_NAME='bashrc'
+    local TRACKED_FILE_PATH_RELATIVE="$DEVICE_NAME/$TRACKED_FILE_NAME"
+
+    git -C $GIT_ROOT_DIR pull && \
+    nano $GIT_ROOT_DIR/$TRACKED_FILE_PATH_RELATIVE && \
+    git -C $GIT_ROOT_DIR add $TRACKED_FILE_PATH_RELATIVE && \
+    git -C $GIT_ROOT_DIR commit -m "update: ${DEVICE_NAME}: ${TRACKED_FILE_NAME} ($(date))" && \
+    git -C $GIT_ROOT_DIR push && \
+    echo 'The bashrc file has been updated and synced with the GitHub repository. The changes will take effect on new bash sessions.'
+}

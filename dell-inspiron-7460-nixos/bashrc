@@ -5,14 +5,27 @@ cfy-edit-nixos-configuration() {
     local TRACKED_CONFIG_FILE_NAME='nixos-main-configuration.nix'
     local TRACKED_CONFIG_FILE_PATH_RELATIVE="$DEVICE_NAME/$TRACKED_CONFIG_FILE_NAME"
 
+    echo 'Launching nano to edit the file...' && \
     sudo nano $MAIN_CONFIG_FILE_PATH && \
-    sudo nixos-rebuild switch && \
+    echo 'Exited successfully from nano.' && \
+    echo 'Pulling the latest repository state from GitHub...' && \
     git -C $GIT_ROOT_DIR pull && \
+    echo 'Done pulling the latest repository state from GitHub.' && \
+    echo 'Comparing with the existing file on GitHub...' && \
     cp -v $MAIN_CONFIG_FILE_PATH $GIT_ROOT_DIR/$TRACKED_CONFIG_FILE_PATH_RELATIVE && \
     git -C $GIT_ROOT_DIR add $TRACKED_CONFIG_FILE_PATH_RELATIVE && \
     git -C $GIT_ROOT_DIR commit -m "update: ${DEVICE_NAME}: ${TRACKED_CONFIG_FILE_NAME} ($(date))" && \
-    git -C $GIT_ROOT_DIR push && \
-    echo 'The NixOS configuration file has been updated, applied, and synced with the GitHub repository.'
+    (
+        echo 'New changes detected in the file.' && \
+        echo 'Applying changes...' && \
+        sudo nixos-rebuild switch && \
+        echo 'Done applying changes.' && \
+        echo 'Pushing the modification(s) to GitHub...' && \
+        git -C $GIT_ROOT_DIR push && \
+        echo 'Done pushing the modification(s) to GitHub.' && \
+        echo 'All done!'
+    ) || \
+    echo 'No changes were made to the NixOS configuration!'
 }
 
 cfy-edit-bashrc() {
@@ -21,10 +34,19 @@ cfy-edit-bashrc() {
     local TRACKED_FILE_NAME='bashrc'
     local TRACKED_FILE_PATH_RELATIVE="$DEVICE_NAME/$TRACKED_FILE_NAME"
 
+    echo 'Pulling the latest repository state from GitHub...' && \
     git -C $GIT_ROOT_DIR pull && \
+    echo 'Done pulling the latest repository state from GitHub.' && \
+    echo 'Launching nano to edit the file...' && \
     nano $GIT_ROOT_DIR/$TRACKED_FILE_PATH_RELATIVE && \
+    echo 'Exited successfully from nano.' && \
+    echo 'Attempting to sync the modification(s) with GitHub...' && \
     git -C $GIT_ROOT_DIR add $TRACKED_FILE_PATH_RELATIVE && \
     git -C $GIT_ROOT_DIR commit -m "update: ${DEVICE_NAME}: ${TRACKED_FILE_NAME} ($(date))" && \
-    git -C $GIT_ROOT_DIR push && \
-    echo 'The bashrc file has been updated and synced with the GitHub repository. The changes will take effect on new bash sessions.'
+    (
+        git -C $GIT_ROOT_DIR push && \
+        echo 'Done syncing the modification(s) with GitHub.' && \
+        echo 'All done!'
+    ) || \
+    echo 'No changes were made to the bashrc file!'
 }

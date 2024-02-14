@@ -1,6 +1,6 @@
 cfy-edit-nixos-configuration() {
     local MAIN_CONFIG_FILE_PATH='/etc/nixos/configuration.nix'
-    local GIT_ROOT_DIR="~/.os-config-sync"
+    local GIT_ROOT_DIR=~/.os-config-sync
     local DEVICE_NAME='dell-inspiron-7460-nixos'
     local TRACKED_CONFIG_FILE_NAME='nixos-main-configuration.nix'
     local TRACKED_CONFIG_FILE_PATH_RELATIVE="$DEVICE_NAME/$TRACKED_CONFIG_FILE_NAME"
@@ -16,7 +16,7 @@ cfy-edit-nixos-configuration() {
 }
 
 cfy-edit-bashrc() {
-    local GIT_ROOT_DIR="~/.os-config-sync"
+    local GIT_ROOT_DIR=~/.os-config-sync
     local DEVICE_NAME='dell-inspiron-7460-nixos'
     local TRACKED_FILE_NAME='bashrc'
     local TRACKED_FILE_PATH_RELATIVE="$DEVICE_NAME/$TRACKED_FILE_NAME"

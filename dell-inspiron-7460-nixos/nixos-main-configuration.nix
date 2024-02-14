@@ -67,6 +67,7 @@
       vscode
       neofetch
       transmission
+      yt-dlp
     ];
   };
 

@@ -68,6 +68,7 @@
       neofetch
       transmission
       yt-dlp
+      obs-studio
     ];
   };
 

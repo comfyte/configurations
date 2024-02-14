@@ -46,7 +46,7 @@ cfy-edit-bashrc() {
     (
         git -C $GIT_ROOT_DIR push && \
         echo 'Done syncing the modification(s) with GitHub.' && \
-        echo 'All done!'
+        echo 'All done! Please note that the changes will take effect on new bash sessions.'
     ) || \
     echo 'No changes were made to the bashrc file!'
 }

@@ -70,6 +70,7 @@
       yt-dlp
       obs-studio
       zoom-us
+      vlc
     ];
   };
 

@@ -12,12 +12,19 @@
   networking = {
     hostName = "mfr-dell-nixos";
     networkmanager.enable = true;
+
+    # For uxplay
+    firewall = {
+      allowedTCPPorts = [ 7000 7001 7100 ];
+      allowedUDPPorts = [ 5353 6000 6001 7011 ];
+    };
   };
 
   time.timeZone = "Asia/Jakarta";
 
   i18n = {
     defaultLocale = "en_US.UTF-8";
+
     extraLocaleSettings = {
       LC_ADDRESS = "id_ID.UTF-8";
       LC_IDENTIFICATION = "id_ID.UTF-8";
@@ -39,7 +46,9 @@
       layout = "us";
       xkbVariant = "";
     };
+
     printing.enable = true;
+
     pipewire = {
       enable = true;
       alsa = {
@@ -47,6 +56,12 @@
         support32Bit = true;
       };
       pulse.enable = true;
+    };
+
+    # For uxplay
+    avahi = {
+      enable = true;
+      publish.enable = true;
     };
   };
 
@@ -60,6 +75,7 @@
     isNormalUser = true;
     description = "Farrel R";
     extraGroups = [ "networkmanager" "wheel" ];
+
     packages = with pkgs; [
       firefox
       google-chrome
@@ -71,10 +87,12 @@
       obs-studio
       zoom-us
       vlc
+      uxplay
     ];
   };
 
   nixpkgs.config.allowUnfree = true;
+
   environment = {
     systemPackages = with pkgs; [
       vim
@@ -82,13 +100,13 @@
       git
       cinnamon.nemo
     ];
+
     gnome.excludePackages = with pkgs.gnome; [ nautilus ];
   };
 
+  # It is recommended to not change this line
   system.stateVersion = "23.11";
 
-  # FARREL'S ADDITIONS BELOW
-
-  # Enable Waydroid support.
+  # Waydroid
   virtualisation.waydroid.enable = true;
 }

@@ -1,2 +1,2 @@
 # Start the uxplay server automatically after logging in
-uxplay -p -vsync no -fps 60 -vs 'waylandsink fullscreen=true' 2>&1 >> ~/.uxplay-logs.txt &
+uxplay -p -vsync no -fps 60 -vs 'waylandsink fullscreen=true' >> ~/.uxplay-logs.txt 2>&1 &

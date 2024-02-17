@@ -65,6 +65,7 @@
       publish = {
         enable = true;
         userServices = true;
+      };
     };
   };
 

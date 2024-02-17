@@ -61,8 +61,10 @@
     # For uxplay
     avahi = {
       enable = true;
-      nssmdns = true;
-      publish.enable = true;
+
+      publish = {
+        enable = true;
+        userServices = true;
     };
   };
 

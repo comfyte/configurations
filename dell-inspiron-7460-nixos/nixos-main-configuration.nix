@@ -13,10 +13,10 @@
     hostName = "mfr-dell-nixos";
     networkmanager.enable = true;
 
-    # For RDP (TCP and UDP port 3389) and uxplay (the rest of the ports)
+    # For uxplay
     firewall = {
-      allowedTCPPorts = [ 3389 7000 7001 7100 ];
-      allowedUDPPorts = [ 3389 5353 6000 6001 7011 ];
+      allowedTCPPorts = [ 7000 7001 7100 ];
+      allowedUDPPorts = [ 5353 6000 6001 7011 ];
     };
   };
 

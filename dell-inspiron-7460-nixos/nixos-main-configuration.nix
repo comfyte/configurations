@@ -126,4 +126,6 @@
 
   # Waydroid
   virtualisation.waydroid.enable = true;
+
+  programs.mtr.enable = true;
 }

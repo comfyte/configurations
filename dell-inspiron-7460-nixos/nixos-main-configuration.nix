@@ -105,6 +105,7 @@
       zoom-us
       vlc
       uxplay
+      bottles
     ];
   };
 
